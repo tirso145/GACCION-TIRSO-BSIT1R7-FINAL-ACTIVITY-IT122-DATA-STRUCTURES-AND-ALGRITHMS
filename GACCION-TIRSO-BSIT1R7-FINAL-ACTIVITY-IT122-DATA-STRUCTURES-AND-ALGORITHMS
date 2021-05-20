@@ -1,0 +1,618 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "higher-malaysia",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "I ate 1/4 of the steak, and Peter eat 1/2 of the Steak.\n",
+      "So all in all we both eat 6/8\n"
+     ]
+    }
+   ],
+   "source": [
+    "#II.1\n",
+    "class Fraction:\n",
+    "\n",
+    "    def __init__(self,numerator,denaminator):\n",
+    "\n",
+    "        self.num = numerator\n",
+    "        self.den = denaminator\n",
+    "\n",
+    "    def __str__(self):\n",
+    "       return str(self.num)+\"/\"+str(self.den)\n",
+    "\n",
+    "    def __add__(self,other_fraction):\n",
+    "        newnum = self.num*other_fraction.den + self.den*other_fraction.num\n",
+    "        newden = self.den * other_fraction.den\n",
+    "\n",
+    "        return Fraction(newnum,newden)\n",
+    "\n",
+    "f1 = Fraction(1,4)\n",
+    "f2 = Fraction(1,2)\n",
+    "f3 = f1 + f2\n",
+    "print(\"I ate\", f1, \"of the steak, and Peter eat\", f2, \"of the Steak.\")\n",
+    "print(\"So all in all we both eat\", f3)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "adjusted-terminal",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Research the __radd__ method. How does it differ from __add__? When is it used?\n",
+      "\n",
+      "__add__() is called to implement the binary arithmetic '+' operation. If one of those methods does not support the operation with the supplied arguments, it should return NotImplemented. These functions __radd__ are only called if the left operand does not support the corresponding operation and the operands are of different types. \n",
+      "\n",
+      "\n",
+      "Implementation : \n",
+      "\n",
+      "['Dota 2', 'Counter Strike', 'Battlefield', 'Call of Duty', 'Resident Evil', 'God of War', 'Mario']\n",
+      "['Given!', 'Dota 2', 'Counter Strike', 'Battlefield']\n"
+     ]
+    }
+   ],
+   "source": [
+    "#II.2\n",
+    "class Collection:\n",
+    "   def __init__(self, pc, playstation):\n",
+    "      self.pc = list(pc)\n",
+    "      self.playstation = playstation\n",
+    "\n",
+    "   def __add__(self, other):\n",
+    "      latest_list = self.pc.copy()\n",
+    "      latest_list.append(other)\n",
+    "      return Collection(latest_list, self.playstation)\n",
+    "\n",
+    "   def __radd__(self, other):\n",
+    "      latest_list = self.pc.copy()\n",
+    "      latest_list.insert(0, other)\n",
+    "      return Collection(latest_list, self.playstation)\n",
+    "\n",
+    "collection = Collection([\"Dota 2\", \"Counter Strike\", \"Battlefield\"], \"Real Python\")\n",
+    "collection_1 = collection + \"Call of Duty\" + \"Resident Evil\" + \"God of War\" + \"Mario\"\n",
+    "\n",
+    "print(\"Research the __radd__ method. How does it differ from __add__? When is it used?\\n\")\n",
+    "print(\"__add__() is called to implement the binary arithmetic '+' operation. If one of those methods does not support the operation with the supplied arguments, it should return NotImplemented. These functions __radd__ are only called if the left operand does not support the corresponding operation and the operands are of different types. \\n\\n\")\n",
+    "print(\"Implementation : \\n\")\n",
+    "print(collection_1.pc)\n",
+    "\n",
+    "collection_2 = \"Given!\" + collection\n",
+    "print(collection_2.pc)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "canadian-rates",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Research the __repr__ method. How does it differ from __str__? When is it used? \n",
+      "\n",
+      "The repr() built-in is used to obtain the parsable string representation of an object. If an object is parsable, that means that Python should be able to recreate the object from the representation when repr is used in conjunction with functions like eval(). To define the behavior of repr(), you can use the __repr__() special method. In cases where the __str__() method is not defined, Python uses the __repr__() method to print the object, as well as to represent the object when str() is called on it.\n",
+      "\n",
+      "\n",
+      "Implementation: \n",
+      "\n",
+      "The person is named Tirso Louise Gaccion and her age is 19\n",
+      "Person(name = Tirso Louise Gaccion, age = 19)\n"
+     ]
+    }
+   ],
+   "source": [
+    "#II.3\n",
+    "print(\"Research the __repr__ method. How does it differ from __str__? When is it used? \\n\")\n",
+    "print(\"The repr() built-in is used to obtain the parsable string representation of an object. If an object is parsable, that means that Python should be able to recreate the object from the representation when repr is used in conjunction with functions like eval(). To define the behavior of repr(), you can use the __repr__() special method. In cases where the __str__() method is not defined, Python uses the __repr__() method to print the object, as well as to represent the object when str() is called on it.\\n\\n\")\n",
+    "\n",
+    "print(\"Implementation: \\n\")\n",
+    "\n",
+    "class Person:\n",
+    "\n",
+    "    def __init__(self, person_name, person_age):\n",
+    "        self.name = person_name\n",
+    "        self.age = person_age\n",
+    "\n",
+    "    def __str__(self):\n",
+    "        return f'The person is named {self.name} and her age is {self.age}'\n",
+    "\n",
+    "    def __repr__(self):\n",
+    "        return f'Person(name = {self.name}, age = {self.age})'\n",
+    "\n",
+    "\n",
+    "p = Person('Tirso Louise Gaccion', 19)\n",
+    "\n",
+    "print(p.__str__())\n",
+    "print(p.__repr__())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "frozen-nightlife",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The most simple arithmetic circuit is known as the half adder. Research the simple half-adder circuit. Implement this circuit.\n",
+      "\n",
+      "\n",
+      "The SUM is:   74\n",
+      "CARRY is:     16\n"
+     ]
+    }
+   ],
+   "source": [
+    "#II.4\n",
+    "print(\"The most simple arithmetic circuit is known as the half adder. Research the simple half-adder circuit. Implement this circuit.\\n\\n\")\n",
+    "def getResult(X, Y):\n",
+    "\tSum = X ^ Y\n",
+    "\tCarry = X & Y\n",
+    "\tprint(\"The SUM is:  \", Sum)\n",
+    "\tprint(\"CARRY is:    \", Carry)\n",
+    "\n",
+    "X = 18\n",
+    "Y = 88\n",
+    "\n",
+    "getResult(X, Y)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "recognized-fountain",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "8 of Spades\n"
+     ]
+    }
+   ],
+   "source": [
+    "#II.5\n",
+    "\n",
+    "import random\n",
+    "class Card:\n",
+    "   def __init__(self, suit, value):\n",
+    "      self.suit = suit\n",
+    "      self.value = value\n",
+    "\n",
+    "   def show(self):\n",
+    "      print(\"{} of {}\".format(self.value, self.suit))\n",
+    "\n",
+    "class Deck:\n",
+    "   def __init__(self):\n",
+    "      self.cards = []\n",
+    "      self.build()\n",
+    "\n",
+    "   def build(self):\n",
+    "      for s in [\"Spades\", \"Clubs\", \"Diamonds\", \"Hearts\"]:\n",
+    "         for v in range(1, 20):\n",
+    "            self.cards.append(Card(s, v))\n",
+    "\n",
+    "   def show(self):\n",
+    "      for c in self.cards:\n",
+    "         c.show()\n",
+    "\n",
+    "   def shuffle(self):\n",
+    "      for i in range(len(self.cards) - 1, 0, -1):\n",
+    "         r = random.randint(0, i)\n",
+    "         self.cards[i], self.cards[r] = self.cards[r], self.cards[i]\n",
+    "\n",
+    "   def drawCard(self):\n",
+    "      return self.cards.pop()\n",
+    "\n",
+    "   def draw(self, deck):\n",
+    "      self.hand.append(deck.drawCard())\n",
+    "      return self\n",
+    "\n",
+    "\n",
+    "deck = Deck()\n",
+    "deck.shuffle()\n",
+    "\n",
+    "card = deck.drawCard()\n",
+    "card.show()\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "authorized-consortium",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Initial queue\n",
+      "['Mason', 'Woods', 'Adler']\n",
+      "\n",
+      "Elements dequeued from queue\n",
+      "Woods\n",
+      "Mason\n",
+      "Adler\n",
+      "\n",
+      "Queue after removing elements\n",
+      "[]\n",
+      "\n",
+      "\n",
+      "As far as have I have learned how to stack items in multiple ways. I have learned that by using the operation Enqueue I\n",
+      "was able  to  stack  items  by  the  rear, and remove items from the front using what I know the append() and pop() methods.\n",
+      "\n"
+     ]
+    }
+   ],
+   "source": [
+    "#II.6\n",
+    "\n",
+    "queue = []\n",
+    "\n",
+    "queue.append('Mason')\n",
+    "queue.append('Woods')\n",
+    "queue.append('Adler')\n",
+    "\n",
+    "print(\"Initial queue\")\n",
+    "print(queue)\n",
+    "\n",
+    "# Removing elements from the queue\n",
+    "print(\"\\nElements dequeued from queue\")\n",
+    "print(queue.pop(1))\n",
+    "print(queue.pop(0))\n",
+    "print(queue.pop(0))\n",
+    "\n",
+    "print(\"\\nQueue after removing elements\")\n",
+    "print(queue)\n",
+    "print(\"\"\"\\n\\nAs far as have I have learned how to stack items in multiple ways. I have learned that by using the operation Enqueue I\n",
+    "was able  to  stack  items  by  the  rear, and remove items from the front using what I know the append() and pop() methods.\\n\"\"\")\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "solid-davis",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Consider a rea life situation. Formulate a question and then design a simulation that can help to answer it.Possible Situations includes:\n",
+      "A Bank Teller\n"
+     ]
+    }
+   ],
+   "source": [
+    "#II.7\n",
+    "print(\"Consider a rea life situation. Formulate a question and then design a simulation that can help to answer it.Possible Situations includes:\")\n",
+    "print(\"A Bank Teller\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "baking-compilation",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Price-->Soap-->Ghost-->Sandman-->\n",
+      "Price-->Soap-->Ghost-->Sandman-->\n",
+      "Price-->Soap-->Sandman-->\n",
+      "Price-->Soap-->\n",
+      "The list is EMPTY\n"
+     ]
+    }
+   ],
+   "source": [
+    "#II.8 \n",
+    "\n",
+    "class Node: \n",
+    "    def __init__(self, data=None, next=None):\n",
+    "        self.data = data\n",
+    "        self.next = next \n",
+    "\n",
+    "class LinkedList:\n",
+    "    def __init__(self):\n",
+    "        self.head = None\n",
+    "        \n",
+    "    def Insert_at_beginning(self, data):\n",
+    "        node = Node(data, self.head)\n",
+    "        self.head = node\n",
+    "        \n",
+    "    def Insert_at_ending(self, data):\n",
+    "        if self.head is None:\n",
+    "            self.head = Node(data)\n",
+    "            return\n",
+    "        itr = self.head\n",
+    "        while itr.next:\n",
+    "            itr = itr.next\n",
+    "        itr.next = Node(data)\n",
+    "\n",
+    "    def insert_values(self, value_list):\n",
+    "\n",
+    "        self.head = None\n",
+    "\n",
+    "        for value in value_list:\n",
+    "            self.Insert_at_ending(value)\n",
+    "\n",
+    "    def get_length(self):\n",
+    "        count = 0\n",
+    "        itr = self.head\n",
+    "        while itr:\n",
+    "            count += 1\n",
+    "            itr = itr.next\n",
+    "        return count\n",
+    "\n",
+    "\n",
+    "    def insert_after_value(self, data_after, data_to_insert):\n",
+    "        if self.head is None:\n",
+    "            return\n",
+    "\n",
+    "        if self.head.data == data_after:\n",
+    "            self.head.next = Node(data_to_insert, self.head.next)\n",
+    "            return\n",
+    "\n",
+    "        itr = self.head\n",
+    "        while itr:\n",
+    "            if itr.data == data_after:\n",
+    "                itr.next = Node(data_to_insert, itr.next)\n",
+    "                break\n",
+    "\n",
+    "            itr = itr.next\n",
+    "\n",
+    "    def remove_by_value(self, data):\n",
+    "        if self.head is None:\n",
+    "            return\n",
+    "\n",
+    "        if self.head.data == data:\n",
+    "            self.head = self.head.next\n",
+    "            return\n",
+    "\n",
+    "        itr = self.head\n",
+    "        while itr.next:\n",
+    "            if itr.next.data == data:\n",
+    "                itr.next = itr.next.next\n",
+    "                break\n",
+    "            itr = itr.next\n",
+    "\n",
+    "    def display(self):\n",
+    "        if self.head is None:\n",
+    "            print('The list is EMPTY')\n",
+    "            return\n",
+    "        itr = self.head\n",
+    "        llstr = ''\n",
+    "        while itr:\n",
+    "            llstr += str(itr.data) + '-->'\n",
+    "            itr = itr.next\n",
+    "        print(llstr)\n",
+    "\n",
+    "\n",
+    "if __name__ == \"__main__\":\n",
+    "    ll = LinkedList()\n",
+    "    ll.insert_values([\"Price\", \"Soap\", \"Ghost\", \"Sandman\"])\n",
+    "    ll.display()\n",
+    "    ll.insert_after_value(\"Reznov\", \"Mason\")\n",
+    "    ll.display()\n",
+    "    ll.remove_by_value(\"Ghost\") \n",
+    "    ll.display()\n",
+    "    ll.remove_by_value(\"Sandman\")\n",
+    "    ll.display()\n",
+    "    ll.remove_by_value(\"Price\")\n",
+    "    ll.remove_by_value(\"Soap\")\n",
+    "    ll.remove_by_value(\"Ghost\")\n",
+    "    ll.remove_by_value(\"Sandman\")\n",
+    "\n",
+    "    ll.display()\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "better-comparative",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The factorial of 5 is 120\n"
+     ]
+    }
+   ],
+   "source": [
+    "#II.9\n",
+    "\n",
+    "def recur_factorial(n):\n",
+    "   if n == 1:\n",
+    "       return n\n",
+    "   else:\n",
+    "       return n*recur_factorial(n-1)\n",
+    "\n",
+    "num = 5\n",
+    "\n",
+    "# check if the number is negative\n",
+    "if num < 0:\n",
+    "   print(\"Sorry, factorial does not exist for negative numbers\")\n",
+    "elif num == 0:\n",
+    "   print(\"The factorial of 0 is 1\")\n",
+    "else:\n",
+    "   print(\"The factorial of\", num, \"is\", recur_factorial(num))\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "registered-november",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "The Binary Search is only applicable to sorted arrays whereas Sequential Search works on all arrays, the order of elements doesn’t matter.\n",
+      "\n",
+      "\n",
+      "\n",
+      "Binary Search\n",
+      "\n",
+      "Binary search : As the name suggests, at each stage you can divide data into two (bi) parts. Here you don’t have to traverse through whole data. Binary Search cannot be applied to Linked List(Because Linked List does not allow Random Access, we cannot access the middle element directly). Sequential Search can be applied to Linked List.\n",
+      "\n",
+      "False\n",
+      "True\n",
+      "\n",
+      "\n",
+      "Sequencial Search\n",
+      "\n",
+      "Sequential search : As the name suggests, you will go through whole data sequentially until you find the match. Sequential Search is straight forward. We are basically visiting all the elements and checking if the given value is present in the array or not.\n",
+      "\n",
+      "False\n",
+      "False\n"
+     ]
+    }
+   ],
+   "source": [
+    "#II.10\n",
+    "\n",
+    "print(\"The Binary Search is only applicable to sorted arrays whereas Sequential Search works on all arrays, the order of elements doesn’t matter.\\n\\n\\n\")\n",
+    "\n",
+    "def binarySearch(alist, item):\n",
+    "   if len(alist) == 0:\n",
+    "      return False\n",
+    "   else:\n",
+    "      midpoint = len(alist)//2\n",
+    "   if alist[midpoint]==item:\n",
+    "      return True\n",
+    "   else:\n",
+    "      if item<alist[midpoint]:\n",
+    "         return binarySearch(alist[:midpoint],item)\n",
+    "      else:\n",
+    "         return binarySearch(alist[midpoint+1:],item)\n",
+    "\t\n",
+    "testlist = [0, 1, 2, 8, 13, 17, 19, 32, 42]\n",
+    "print(\"Binary Search\\n\")\n",
+    "print(\"Binary search : As the name suggests, at each stage you can divide data into two (bi) parts. Here you don’t have to traverse through whole data. Binary Search cannot be applied to Linked List(Because Linked List does not allow Random Access, we cannot access the middle element directly). Sequential Search can be applied to Linked List.\\n\")\n",
+    "print(binarySearch(testlist, 3))\n",
+    "print(binarySearch(testlist, 13))\n",
+    "\n",
+    "def sequentialSearch(alist, item):\n",
+    "   pos = 0\n",
+    "   found = False\n",
+    "   while pos < len(alist) and not found:\n",
+    "      if alist[pos] == item:\n",
+    "         found = True\n",
+    "      else:\n",
+    "         pos = pos+1\n",
+    "         return found\n",
+    "\n",
+    "testlist = [1, 2, 32, 8, 17, 19, 42, 13, 0]\n",
+    "print(\"\\n\\nSequencial Search\\n\")\n",
+    "print(\"Sequential search : As the name suggests, you will go through whole data sequentially until you find the match. Sequential Search is straight forward. We are basically visiting all the elements and checking if the given value is present in the array or not.\\n\")\n",
+    "print(sequentialSearch(testlist, 3))\n",
+    "print(sequentialSearch(testlist, 13))\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "dental-moderator",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "33\n"
+     ]
+    }
+   ],
+   "source": [
+    "#II.11\n",
+    "\n",
+    "val = [3, 4, 8, 8, 10]\n",
+    "wt = [2, 3, 4, 5, 9]\n",
+    "W = 50\n",
+    "n = len(val)\n",
+    "\n",
+    "t = [[-1 for i in range(W + 1)] for j in range(n + 1)]\n",
+    "\n",
+    "\n",
+    "def knapsack(wt, val, W, n):\n",
+    "\n",
+    "\tif n == 0 or W == 0:\n",
+    "\t\treturn 0\n",
+    "\tif t[n][W] != -1:\n",
+    "\t\treturn t[n][W]\n",
+    "\n",
+    "\tif wt[n-1] <= W:\n",
+    "\t\tt[n][W] = max(\n",
+    "\t\t\tval[n-1] + knapsack(\n",
+    "\t\t\t\twt, val, W-wt[n-1], n-1),\n",
+    "\t\t\tknapsack(wt, val, W, n-1))\n",
+    "\t\treturn t[n][W]\n",
+    "\telif wt[n-1] > W:\n",
+    "\t\tt[n][W] = knapsack(wt, val, W, n-1)\n",
+    "\t\treturn t[n][W]\n",
+    "\n",
+    "\n",
+    "print(knapsack(wt, val, W, n))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "related-boundary",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.1"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
